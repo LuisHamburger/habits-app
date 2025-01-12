@@ -1,0 +1,11 @@
+body {
+    background-color: #e6e3e3;
+    font-family: "Reddit Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.green-letter {
+    color: #014701;
+}
