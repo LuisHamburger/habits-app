@@ -1,15 +1,15 @@
-.btn-outline-green {
+.c-btn-outline-green {
     color: #014701;
     border-color: #014701;
     background-color: transparent;
 }
 
-.btn-outline-green:hover {
+.c-btn-outline-green:hover {
     color: #fff;
     background-color: #014701;
     border-color: #014701;
 }
 
-.custom-fs-15 {
+.c-fs-40 {
     font-size: 40px;
 }

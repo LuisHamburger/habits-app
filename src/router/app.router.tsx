@@ -21,7 +21,7 @@ const routes = [
         children: [
             { path: 'list', element: <List /> },
             { path: 'create', element: <Create /> },
-            { path: 'detail/:id', element: <Detail /> },
+            { path: ':id', element: <Detail /> },
             { path: '', element: <Navigate to='list' /> }, // Redirección por defecto
         ],
     },

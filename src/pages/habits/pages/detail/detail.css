@@ -1,7 +1,6 @@
-.c-h-50 {
-    height: 60vh;
+.c-card-size {
+    max-width: 110px;
+    max-height: 100px;
+    min-width: 110px;
+    min-height: 100px;
 }
-
-.c-max-width-150 {
-    max-width: 150px;
-}k

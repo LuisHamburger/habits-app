@@ -5,7 +5,7 @@ import { Search } from '../../components/search.component';
 import { ListItem } from '../../components/list-item.componen';
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getHabitsByClientId } from '../../helpers/habits.helpers';
+import { fetchHabitsByClientId } from '../../helpers/habits.helpers';
 
 export const List = () => {
 
@@ -13,7 +13,7 @@ export const List = () => {
 
     const navigate = useNavigate();
     
-    const habits = useMemo( () => getHabitsByClientId( id! ), [ id ]);
+    const habits = useMemo( () => fetchHabitsByClientId( id! ), [ id ]);
 
     const onSearchHabit = (habitName: string) => {
         Swal.fire(`Any Item Found - ${habitName}`, "", "error")

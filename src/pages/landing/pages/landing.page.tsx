@@ -7,7 +7,7 @@ export const Landing = () => {
       {/* Header Section */}
       <div className="row">
         <h1 className='col-4 text-center animate__animated animate__backInLeft'>¡Make</h1>
-        <h1 className='col-3 green-letter text-center animate__animated animate__flip'>it</h1>
+        <h1 className='col-3 c-green-letter text-center animate__animated animate__flip'>it</h1>
         <h1 className='col-5 text-center animate__animated animate__backInRight'>happen!</h1>
       </div>
 

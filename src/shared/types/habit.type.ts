@@ -8,6 +8,10 @@ export type Habit = {
 
 export type HabitTrackingEntry = {
     habitId: string;
-    date: string;
+    date: Date;
     status: HabitTrackingEntryStatus;
+}
+
+export type HabitDetail = Habit & {
+    habitTrackingEntries: HabitTrackingEntry[];
 }

@@ -14,7 +14,7 @@ export const ListItem = ({ habit, onDeleteHabit, onDetailHabit }: ListItemProps)
             <span>{habit.name}</span>
             <div>
                 <button
-                    className="btn btn-outline-green me-2"
+                    className="btn c-btn-outline-green me-2"
                     type="button"
                     onClick={() => onDetailHabit(habit.id)}
                     aria-label={`View ${habit.name}`}

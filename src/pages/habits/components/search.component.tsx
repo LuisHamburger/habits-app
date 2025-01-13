@@ -24,8 +24,8 @@ export const Search = ({onCreateHabit, onSearchHabit}: SearchProps) => {
                 aria-label="Habit's name"
                 onChange={onInputChange}
             />
-            <button className="btn btn-outline-green fs-1" type="button" id="button-addon2" onClick={() => onSearchHabit(habitName)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-            <button className="btn btn-outline-green fs-1" type="button" id="button-addon2" onClick={() => onCreateHabit()}><FontAwesomeIcon icon={faPlus} /></button>
+            <button className="btn c-btn-outline-green fs-1" type="button" id="button-addon2" onClick={() => onSearchHabit(habitName)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
+            <button className="btn c-btn-outline-green fs-1" type="button" id="button-addon2" onClick={() => onCreateHabit()}><FontAwesomeIcon icon={faPlus} /></button>
         </div>
     )
 }

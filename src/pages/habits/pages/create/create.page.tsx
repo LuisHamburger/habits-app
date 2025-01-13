@@ -9,7 +9,7 @@ export const Create = () => {
                 <label itemRef="exampleInputEmail1" className="form-label">Name</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
             </div>
-            <button type="submit" className="btn btn-outline-green w-100">Create</button>
+            <button type="submit" className="btn c-btn-outline-green w-100">Create</button>
         </form>
     </>
 }
