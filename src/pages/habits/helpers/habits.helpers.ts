@@ -3,14 +3,15 @@ import { HabitTrackingEntryMock, HabitsMock } from "../data/data";
 import { format } from 'date-fns';
 import { HabitTrackingEntryStatus } from '../../../shared/enums/habit-tracking-entry-status.enum';
 import { v4 } from 'uuid';
+import { HabitStatus } from '../../../shared/enums/habit-status.enum';
 
 // Obtiene los hábitos asociados a un ID de cliente específico
 export const fetchHabitsByClientId = (clientId: string): Habit[] => 
-    HabitsMock.filter(habit => habit.clientId === clientId);
+    HabitsMock.filter(habit => habit.clientId === clientId && habit.status === HabitStatus.ACTIVE);
 
 // Obtiene información detallada sobre un hábito específico por su ID
 export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined => {
-    const habit = HabitsMock.find(habit => habit.id === habitId);
+    const habit = HabitsMock.find(habit => habit.id === habitId && habit.status === HabitStatus.ACTIVE);
     
     if (!habit) return undefined; // Retorna undefined explícitamente si no se encuentra el hábito
 
@@ -20,6 +21,7 @@ export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined =
         id: habit.id,
         clientId: habit.clientId,
         name: habit.name,
+        status: habit.status,
         habitTrackingEntries: trackingEntries
     };
 }
@@ -50,7 +52,18 @@ export const createHabit = (name: string, clientId: string): void => {
        id: v4(),
        name,
        clientId,
+       status: HabitStatus.ACTIVE
    }
 
    HabitsMock.push(habit);
+};
+
+export const deleteHabit = (habitId: string, clientId: string): void => {
+    const habitToDelete = HabitsMock.find(habit => habit.id === habitId && habit.clientId === clientId);
+
+    if (habitToDelete) {
+        habitToDelete.status = HabitStatus.DELETED;  // Actualiza el estado a DELETED
+    } else {
+        console.error("Habit not found or client ID does not match.");
+    }
 };

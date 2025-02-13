@@ -13,7 +13,7 @@ export const Create = () => {
         setName(e.target.value);
     };
 
-    const onCreate = async () => {
+    const onCreate = () => {
         if (!name.trim()) {
             Swal.fire({
                 icon: 'error',
@@ -23,7 +23,8 @@ export const Create = () => {
             return;
         }
 
-        await createHabit(name, clientID);
+        createHabit(name, clientID);
+        
         Swal.fire({
             icon: 'success',
             title: 'Habit Created!',
