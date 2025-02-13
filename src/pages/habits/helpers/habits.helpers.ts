@@ -2,6 +2,7 @@ import { Habit, HabitTrackingEntry, HabitDetail } from '../../../shared/types/ha
 import { HabitTrackingEntryMock, HabitsMock } from "../data/data";
 import { format } from 'date-fns';
 import { HabitTrackingEntryStatus } from '../../../shared/enums/habit-tracking-entry-status.enum';
+import { v4 } from 'uuid';
 
 // Obtiene los hábitos asociados a un ID de cliente específico
 export const fetchHabitsByClientId = (clientId: string): Habit[] => 
@@ -42,4 +43,14 @@ export const updateTrackingEntry = (habitId: string, date: Date, status: HabitTr
     } else {
         HabitTrackingEntryMock.push({ date, habitId, status }); // Agrega una nueva entrada si no se encuentra
     }
+};
+
+export const createHabit = (name: string, clientId: string): void => {
+   const habit: Habit = {
+       id: v4(),
+       name,
+       clientId,
+   }
+
+   HabitsMock.push(habit);
 };

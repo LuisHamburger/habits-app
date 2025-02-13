@@ -28,7 +28,7 @@ export const List = () => {
     }
 
     const onDetailHabit = (habitId: string) => {
-        navigate(`/habits/detail/${habitId}`, {replace: true});
+        navigate(`/habits/${habitId}`, {replace: true});
     }
 
     return (
