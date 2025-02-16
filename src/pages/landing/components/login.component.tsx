@@ -2,18 +2,17 @@ import { CredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oau
 import 'animate.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { saveClientID, saveSessionToken } from '../../../shared/helpers/client.helper';
 
 export const Login = () => {
     const navigate = useNavigate();
 
-    // on successful login
-    const onLoginSuccess = (credentialResponse: CredentialResponse) => {
-        localStorage.setItem('clientID', credentialResponse.clientId!);
-        localStorage.setItem('googleToken', credentialResponse.credential!);
+    const onLoginSuccess = ({clientId, credential}: CredentialResponse) => {
+        saveClientID(clientId!)
+        saveSessionToken(credential!)
         navigate('/habits/list', { replace: true });
     };
 
-    // on login failure
     const onLoginFailure = () => {
          Swal.fire('Login Fail!', 'There is an error, please try again.', 'error'); 
     };

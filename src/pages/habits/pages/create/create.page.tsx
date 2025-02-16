@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '../../components/header.component';
-import { createHabit } from '../../helpers/habits.helpers';
+import { createHabit } from '../../helpers/habits.helper';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { getClientID } from '../../../../shared/helpers/client.helper';
 
 export const Create = () => {
+
     const navigate = useNavigate();
-    const clientID = 'a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6';
+
+    const clientID = getClientID();
+
+    useEffect(() => {
+        if (!clientID) {
+            navigate('landing', { replace: true });
+            Swal.fire('Be logged', 'There is an error, please login again.', 'warning');
+        }
+    }, [clientID, navigate]);
+
+
     const [name, setName] = useState<string>('');
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,12 +35,12 @@ export const Create = () => {
             return;
         }
 
-        createHabit(name, clientID);
-        
+        createHabit(name, clientID!);
+
         Swal.fire({
             icon: 'success',
             title: 'Habit Created!',
-            text: `Your habit "${name}" has been created successfully.`,
+            text: `Your habit ${name} has been created successfully.`,
         }).then(() => {
             navigate('/habits/list', { replace: true });
         });

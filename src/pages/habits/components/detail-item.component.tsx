@@ -10,9 +10,9 @@ export type DetailItemProps = {
 }
 
 export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatus }: DetailItemProps) => {
-    const renderDetailBox = () => {
-        const dateFormatted = format(habitTrackingEntry.date, 'dd');
+    const dateFormatted = format(habitTrackingEntry.date, 'dd');
 
+    const renderDetailBox = () => {
         switch (habitTrackingEntry.status) {
             case HabitTrackingEntryStatus.COMPLETED:
                 return (
@@ -46,7 +46,7 @@ export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatu
                 );
 
             default:
-                return null; // Handle unexpected status if necessary
+                return null;
         }
     };
 

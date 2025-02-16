@@ -2,16 +2,22 @@ import './detail.css';
 import { DetailHeader } from '../../components/detail-header.component';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
-import { filterTrackingEntriesByMonth, fetchHabitDetailById, fetchHabitTrackingEntriesByHabitId, updateTrackingEntry } from '../../helpers/habits.helpers';
-import { addMonths, subMonths, eachDayOfInterval, startOfMonth, endOfMonth, getMonth } from 'date-fns';
-import { HabitDetail, HabitTrackingEntry } from '../../../../shared/types/habit.type';
+import { fetchHabitDetailById, updateTrackingEntry } from '../../helpers/habits.helper';
+import { addMonths, subMonths, isSameMonth } from 'date-fns';
+import { HabitTrackingEntry } from '../../../../shared/types/habit.type';
 import { DetailItem } from '../../components/detail-item.component';
 import { HabitTrackingEntryStatus } from '../../../../shared/enums/habit-tracking-entry-status.enum';
+import { CURRENT_DATE, getFilteredTrackingEntries } from '../../helpers/detail.helper';
+
 
 export const Detail = () => {
+
     const { id } = useParams();
+
     const navigate = useNavigate();
-    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const [selectedDate, setSelectedDate] = useState(CURRENT_DATE);
+
     const [trackingEntries, setTrackingEntries] = useState<HabitTrackingEntry[]>([]);
 
     const habitDetail = useMemo(() => {
@@ -23,12 +29,14 @@ export const Detail = () => {
         }
     }, [id, navigate]);
 
+
     useEffect(() => {
         setTrackingEntries(getFilteredTrackingEntries(habitDetail!, selectedDate));
     }, [habitDetail, selectedDate]);
+    
 
     const handleDateChange = (increment: boolean) => {
-        if (increment && isSameMonth(selectedDate, new Date())) return;
+        if (increment && isSameMonth(selectedDate, CURRENT_DATE)) return;
         setSelectedDate(increment ? addMonths(selectedDate, 1) : subMonths(selectedDate, 1));
     };
 
@@ -61,35 +69,3 @@ export const Detail = () => {
         </div>
     );
 };
-
-const getFilteredTrackingEntries = (habit: HabitDetail, date: Date) => {
-    const allEntries = fetchHabitTrackingEntriesByHabitId(habit.id);
-    const filteredEntries = filterTrackingEntriesByMonth(allEntries, date) ?? [];
-
-    const startOfSelectedMonth = startOfMonth(date);
-    const endOfSelectedMonth = isSameMonth(date, new Date()) ? new Date() : endOfMonth(date);
-    const daysInInterval = eachDayOfInterval({ start: startOfSelectedMonth, end: endOfSelectedMonth });
-
-    console.log(filteredEntries)
-    // Crear un mapa para las entradas existentes
-    const existingEntriesMap = new Map(filteredEntries.map(entry => [new Date(entry.date).toISOString(), entry]));
-
-    // Crear una nueva lista de entradas con estado pendiente para los días que no tienen entrada
-    const updatedEntries = daysInInterval.map(day => {
-        const isoDate = day.toISOString();
-        if (existingEntriesMap.has(isoDate)) {
-            return existingEntriesMap.get(isoDate)!; // Retorna la entrada existente
-        } else {
-            return {
-                date: day,
-                status: HabitTrackingEntryStatus.PENDING, // Estado pendiente
-            } as HabitTrackingEntry;
-        }
-    });
-
-    return updatedEntries;
-};
-
-const isSameMonth = (firstDate: Date, secondDate: Date) => {
-    return getMonth(firstDate) === getMonth(secondDate);
-}

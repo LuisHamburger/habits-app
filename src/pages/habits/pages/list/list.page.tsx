@@ -3,40 +3,42 @@ import Swal from 'sweetalert2';
 import { Header } from '../../components/header.component';
 import { Search } from '../../components/search.component';
 import { ListItem } from '../../components/list-item.component';
-import { useMemo, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchHabitsByClientId, deleteHabit } from '../../helpers/habits.helpers';
+import { fetchHabitsByClientId, deleteHabit } from '../../helpers/habits.helper';
+import { getClientID } from '../../../../shared/helpers/client.helper';
+import { Habit } from '../../../../shared/types/habit.type';
 
 export const List = () => {
-    const id = localStorage.getItem('clientID');
-
+    const clientID = getClientID();
     const navigate = useNavigate();
 
-    if(!id) {
-        navigate('landing', { replace: true });
+    useEffect(() => {
+        if (!clientID) {
+            navigate('landing', { replace: true });
+            Swal.fire('Be logged', 'There is an error, please login again.', 'warning');
+        }
+    }, [clientID, navigate]);
 
-        Swal.fire('Be logged', 'There is an error, please login again.', 'warning'); 
-        
-    }
-    
-    // Fetch habits by client ID
-    const habits = useMemo(() => fetchHabitsByClientId(id!), [id]);
-    
-    // State for holding the filtered habits
-    const [filteredHabits, setFilteredHabits] = useState(habits);
+    const [habits, setHabits] = useState<Habit[]>([]);
+    const [filteredHabits, setFilteredHabits] = useState<Habit[]>([]);
 
-    // Handle the search functionality
+    useEffect(() => {
+        if (clientID) {
+            const fetchedHabits = fetchHabitsByClientId(clientID);
+            setHabits(fetchedHabits);
+            setFilteredHabits(fetchedHabits);
+        }
+    }, [clientID]);
+
     const onSearchHabit = (habitName: string) => {
-        if (habitName.trim() === '') {
+        const searchQuery = habitName.trim().toLowerCase();
+        if (!searchQuery) {
             setFilteredHabits(habits);
         } else {
-            const filtered = habits.filter(habit =>
-                habit.name.toLowerCase().includes(habitName.toLowerCase())
-            );
-
-            if (filtered.length > 0) {
-                setFilteredHabits(filtered);
-            } else {
+            const results = habits.filter(habit => habit.name.toLowerCase().includes(searchQuery));
+            setFilteredHabits(results);
+            if (results.length === 0) {
                 Swal.fire(`No habits found for: ${habitName}`, '', 'error');
             }
         }
@@ -46,7 +48,6 @@ export const List = () => {
         navigate('/habits/create', { replace: true });
     };
 
-    // Update the onDeleteHabit to call deleteHabit and refresh the filtered list
     const onDeleteHabit = (habitId: string) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -57,13 +58,10 @@ export const List = () => {
             cancelButtonText: 'No, cancel!',
         }).then((result) => {
             if (result.isConfirmed) {
-                // Call the delete function
-                deleteHabit(habitId, id!);
-
-                // Update filtered habits after deletion
-                const updatedHabits = fetchHabitsByClientId(id!)
+                deleteHabit(habitId, clientID!);
+                const updatedHabits = fetchHabitsByClientId(clientID!);
+                setHabits(updatedHabits);
                 setFilteredHabits(updatedHabits);
-
                 Swal.fire('Deleted!', 'Your habit has been deleted.', 'success');
             }
         });
@@ -84,14 +82,18 @@ export const List = () => {
             <div className="row mt-4 w-100">
                 <div className="col-12">
                     <ul className="list-group">
-                        {filteredHabits.map(habit => (
-                            <ListItem
-                                key={habit.id}
-                                habit={habit}
-                                onDeleteHabit={onDeleteHabit}  // Use the updated delete function
-                                onDetailHabit={onDetailHabit}
-                            />
-                        ))}
+                        {filteredHabits.length > 0 ? (
+                            filteredHabits.map(habit => (
+                                <ListItem
+                                    key={habit.id}
+                                    habit={habit}
+                                    onDeleteHabit={onDeleteHabit}
+                                    onDetailHabit={onDetailHabit}
+                                />
+                            ))
+                        ) : (
+                            <li className="list-group-item text-center">No habits found</li>
+                        )}
                     </ul>
                 </div>
             </div>
