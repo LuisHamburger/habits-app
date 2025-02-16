@@ -8,8 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import { fetchHabitsByClientId, deleteHabit } from '../../helpers/habits.helpers';
 
 export const List = () => {
-    const id = 'a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6';
+    const id = localStorage.getItem('clientID');
+
     const navigate = useNavigate();
+
+    if(!id) {
+        navigate('landing', { replace: true });
+
+        Swal.fire('Be logged', 'There is an error, please login again.', 'warning'); 
+        
+    }
     
     // Fetch habits by client ID
     const habits = useMemo(() => fetchHabitsByClientId(id!), [id]);
@@ -50,7 +58,7 @@ export const List = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // Call the delete function
-                deleteHabit(habitId, id);
+                deleteHabit(habitId, id!);
 
                 // Update filtered habits after deletion
                 const updatedHabits = fetchHabitsByClientId(id!)
