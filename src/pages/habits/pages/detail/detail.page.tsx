@@ -50,7 +50,7 @@ export const Detail = () => {
 
             <div className="row w-100 mt-4 d-flex justify-content-evenly align-items-center">
                 {trackingEntries.map(entry => (
-                    <div key={entry.date.getTime()} className="col border border-dark text-center my-1 c-card-size">
+                    <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size">
                         <DetailItem
                             habitTrackingEntry={entry}
                             onUpdateHabitTrackingEntryStatus={handleUpdateTrackingEntryStatus}
@@ -70,8 +70,9 @@ const getFilteredTrackingEntries = (habit: HabitDetail, date: Date) => {
     const endOfSelectedMonth = isSameMonth(date, new Date()) ? new Date() : endOfMonth(date);
     const daysInInterval = eachDayOfInterval({ start: startOfSelectedMonth, end: endOfSelectedMonth });
 
+    console.log(filteredEntries)
     // Crear un mapa para las entradas existentes
-    const existingEntriesMap = new Map(filteredEntries.map(entry => [entry.date.toISOString(), entry]));
+    const existingEntriesMap = new Map(filteredEntries.map(entry => [new Date(entry.date).toISOString(), entry]));
 
     // Crear una nueva lista de entradas con estado pendiente para los días que no tienen entrada
     const updatedEntries = daysInInterval.map(day => {

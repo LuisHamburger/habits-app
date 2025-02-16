@@ -1,19 +1,32 @@
 import { Habit, HabitTrackingEntry, HabitDetail } from '../../../shared/types/habit.type';
-import { HabitTrackingEntryMock, HabitsMock } from "../data/data";
 import { format } from 'date-fns';
 import { HabitTrackingEntryStatus } from '../../../shared/enums/habit-tracking-entry-status.enum';
 import { v4 } from 'uuid';
 import { HabitStatus } from '../../../shared/enums/habit-status.enum';
 
-// Obtiene los hábitos asociados a un ID de cliente específico
-export const fetchHabitsByClientId = (clientId: string): Habit[] => 
-    HabitsMock.filter(habit => habit.clientId === clientId && habit.status === HabitStatus.ACTIVE);
+// Helper function to get data from localStorage
+const getLocalStorageData = <T>(key: string, defaultValue: T): T => {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : defaultValue;
+};
 
-// Obtiene información detallada sobre un hábito específico por su ID
+// Helper function to save data to localStorage
+const setLocalStorageData = <T>(key: string, data: T): void => {
+    localStorage.setItem(key, JSON.stringify(data));
+};
+
+// Fetch habits by client ID from localStorage
+export const fetchHabitsByClientId = (clientId: string): Habit[] => {
+    const habits: Habit[] = getLocalStorageData('habits', []);
+    return habits.filter(habit => habit.clientId === clientId && habit.status === HabitStatus.ACTIVE);
+};
+
+// Get detailed information about a specific habit by ID
 export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined => {
-    const habit = HabitsMock.find(habit => habit.id === habitId && habit.status === HabitStatus.ACTIVE);
+    const habits: Habit[] = getLocalStorageData('habits', []);
+    const habit = habits.find(habit => habit.id === habitId && habit.status === HabitStatus.ACTIVE);
     
-    if (!habit) return undefined; // Retorna undefined explícitamente si no se encuentra el hábito
+    if (!habit) return undefined;
 
     const trackingEntries = fetchHabitTrackingEntriesByHabitId(habitId);
 
@@ -24,45 +37,53 @@ export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined =
         status: habit.status,
         habitTrackingEntries: trackingEntries
     };
-}
+};
 
-// Función auxiliar para obtener las entradas de seguimiento de hábitos por ID de hábito
-export const fetchHabitTrackingEntriesByHabitId = (habitId: string): HabitTrackingEntry[] => 
-    HabitTrackingEntryMock.filter(entry => entry.habitId === habitId);
+// Get habit tracking entries by habit ID
+export const fetchHabitTrackingEntriesByHabitId = (habitId: string): HabitTrackingEntry[] => {
+    const entries: HabitTrackingEntry[] = getLocalStorageData('habitTrackingEntries', []);
+    return entries.filter(entry => entry.habitId === habitId);
+};
 
-// Filtra las entradas de seguimiento de hábitos por mes
+// Filter habit tracking entries by month
 export const filterTrackingEntriesByMonth = (entries: HabitTrackingEntry[], date: Date): HabitTrackingEntry[] => 
-    entries.filter(entry => format(entry.date, 'yyyy-MM') === format(date, 'yyyy-MM'));
+    entries.filter(entry => format(new Date(entry.date), 'yyyy-MM') === format(date, 'yyyy-MM'));
 
-// Actualiza una entrada de seguimiento de hábito específica
+// Update a specific habit tracking entry
 export const updateTrackingEntry = (habitId: string, date: Date, status: HabitTrackingEntryStatus): void => {
-    const entryToUpdate = HabitTrackingEntryMock.find(entry => 
-        entry.habitId === habitId && entry.date.getTime() === date.getTime()
-    );
+    const entries: HabitTrackingEntry[] = getLocalStorageData('habitTrackingEntries', []);
+    const entryToUpdate = entries.find(entry => entry.habitId === habitId && new Date(entry.date).getTime() === date.getTime());
 
     if (entryToUpdate) {
-        entryToUpdate.status = status; // Actualiza el estado
+        entryToUpdate.status = status;
     } else {
-        HabitTrackingEntryMock.push({ date, habitId, status }); // Agrega una nueva entrada si no se encuentra
+        entries.push({ date, habitId, status });
     }
+
+    setLocalStorageData('habitTrackingEntries', entries);
 };
 
+// Create a new habit
 export const createHabit = (name: string, clientId: string): void => {
-   const habit: Habit = {
-       id: v4(),
-       name,
-       clientId,
-       status: HabitStatus.ACTIVE
-   }
-
-   HabitsMock.push(habit);
+    const habits: Habit[] = getLocalStorageData('habits', []);
+    const habit: Habit = {
+        id: v4(),
+        name,
+        clientId,
+        status: HabitStatus.ACTIVE
+    };
+    habits.push(habit);
+    setLocalStorageData('habits', habits);
 };
 
+// Delete a habit (mark as DELETED)
 export const deleteHabit = (habitId: string, clientId: string): void => {
-    const habitToDelete = HabitsMock.find(habit => habit.id === habitId && habit.clientId === clientId);
+    const habits: Habit[] = getLocalStorageData('habits', []);
+    const habitToDelete = habits.find(habit => habit.id === habitId && habit.clientId === clientId);
 
     if (habitToDelete) {
-        habitToDelete.status = HabitStatus.DELETED;  // Actualiza el estado a DELETED
+        habitToDelete.status = HabitStatus.DELETED;
+        setLocalStorageData('habits', habits);
     } else {
         console.error("Habit not found or client ID does not match.");
     }
