@@ -1,0 +1,6 @@
+.c-card-size {
+    max-width: 110px;
+    max-height: 100px;
+    min-width: 110px;
+    min-height: 100px;
+}
