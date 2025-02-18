@@ -9,7 +9,7 @@ type DetailHeader = {
     onNextDate: () => void;
 }
 
-export const DetailHeader = ({habitName, habitDate, onPreviousDate, onNextDate}: DetailHeader) => {
+export const DetailHeader = ({ habitName, habitDate, onPreviousDate, onNextDate }: DetailHeader) => {
     return (
         <>
             <div className="row mt-4 w-100">
@@ -17,9 +17,9 @@ export const DetailHeader = ({habitName, habitDate, onPreviousDate, onNextDate}:
             </div>
 
             <div className="row mt-4 w-100 d-flex justify-content-between align-items-center">
-                <button 
-                    className="col-2 btn c-btn-outline-green" 
-                    type="button" 
+                <button
+                    className="col-2 btn c-btn-outline-green"
+                    type="button"
                     aria-label="Previous Date"
                     onClick={onPreviousDate}
                 >
@@ -28,9 +28,10 @@ export const DetailHeader = ({habitName, habitDate, onPreviousDate, onNextDate}:
 
                 <h2 className="col-6 text-center m-0">{format(habitDate, 'yyyy-MM')}</h2>
 
-               <button 
-                    className="col-2 btn c-btn-outline-green" 
-                    type="button" 
+                <button
+                    className="col-2 btn c-btn-outline-green"
+                    style={{ visibility: showNextButton(habitDate) ? 'visible' : 'hidden' }}
+                    type="button"
                     aria-label="Next Date"
                     onClick={onNextDate}
                 >
@@ -40,3 +41,8 @@ export const DetailHeader = ({habitName, habitDate, onPreviousDate, onNextDate}:
         </>
     );
 };
+
+const showNextButton = (habitDate: Date) => {
+    const currentDate = new Date();
+    return (new Date(format(habitDate, 'yyyy-MM')).getTime() < new Date(format(currentDate, 'yyyy-MM')).getTime());
+}

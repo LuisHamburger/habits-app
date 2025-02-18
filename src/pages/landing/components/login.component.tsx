@@ -2,19 +2,28 @@ import { CredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oau
 import 'animate.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { saveClientID, saveSessionToken } from '../../../shared/helpers/client.helper';
+import { saveClientID, saveSessionToken, getClientID } from '../../../shared/helpers/client.helper';
+import { useEffect } from 'react';
 
 export const Login = () => {
+    const clientID = getClientID();
+
     const navigate = useNavigate();
 
-    const onLoginSuccess = ({clientId, credential}: CredentialResponse) => {
+    useEffect(() => {
+        if (clientID) {
+            navigate('/habits/list', { replace: true })
+        }
+    }, [clientID, navigate])
+
+    const onLoginSuccess = ({ clientId, credential }: CredentialResponse) => {
         saveClientID(clientId!)
         saveSessionToken(credential!)
         navigate('/habits/list', { replace: true });
     };
 
     const onLoginFailure = () => {
-         Swal.fire('Login Fail!', 'There is an error, please try again.', 'error'); 
+        Swal.fire('Login Fail!', 'There is an error, please try again.', 'error');
     };
 
     return (

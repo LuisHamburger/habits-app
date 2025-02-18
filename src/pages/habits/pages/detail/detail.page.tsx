@@ -21,19 +21,20 @@ export const Detail = () => {
     const [trackingEntries, setTrackingEntries] = useState<HabitTrackingEntry[]>([]);
 
     const habitDetail = useMemo(() => {
-        if (id) {
-            return fetchHabitDetailById(id);
-        } else {
-            navigate('/habits/list', { replace: true });
-            return undefined;
-        }
-    }, [id, navigate]);
-
+        const habit = fetchHabitDetailById(id!);
+        return habit;
+    }, [id]);
 
     useEffect(() => {
-        setTrackingEntries(getFilteredTrackingEntries(habitDetail!, selectedDate));
+        if (!habitDetail) {
+            navigate('/habits/list', { replace: true });
+        }
+    }, [habitDetail, navigate]);
+
+    useEffect(() => {
+        setTrackingEntries(habitDetail && selectedDate ? getFilteredTrackingEntries(habitDetail!, selectedDate) : []);
     }, [habitDetail, selectedDate]);
-    
+
 
     const handleDateChange = (increment: boolean) => {
         if (increment && isSameMonth(selectedDate, CURRENT_DATE)) return;
