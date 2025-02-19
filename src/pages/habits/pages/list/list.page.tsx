@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchHabitsByClientId, deleteHabit } from '../../helpers/habits.helper';
 import { getClientID } from '../../../../shared/helpers/client.helper';
 import { Habit } from '../../../../shared/types/habit.type';
+import { Footer } from '../../components/footer.component';
 
 export const List = () => {
     const clientID = getClientID();
@@ -97,6 +98,8 @@ export const List = () => {
                     </ul>
                 </div>
             </div>
+
+            <Footer showBackArrow={false} showLogout={true}/>
         </div>
     );
 };

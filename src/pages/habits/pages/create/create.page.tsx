@@ -4,6 +4,7 @@ import { createHabit } from '../../helpers/habits.helper';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { getClientID } from '../../../../shared/helpers/client.helper';
+import { Footer } from '../../components/footer.component';
 
 export const Create = () => {
 
@@ -63,6 +64,7 @@ export const Create = () => {
                 </div>
                 <button onClick={onCreate} type="button" className="btn c-btn-outline-green w-100">Create</button>
             </form>
+            <Footer showBackArrow={true} showLogout={false} backArrowNavigateTo='/habits/list' />
         </>
     );
 };

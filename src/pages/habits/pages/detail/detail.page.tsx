@@ -8,7 +8,7 @@ import { HabitTrackingEntry } from '../../../../shared/types/habit.type';
 import { DetailItem } from '../../components/detail-item.component';
 import { HabitTrackingEntryStatus } from '../../../../shared/enums/habit-tracking-entry-status.enum';
 import { CURRENT_DATE, getFilteredTrackingEntries } from '../../helpers/detail.helper';
-
+import { Footer } from '../../components/footer.component';
 
 export const Detail = () => {
 
@@ -57,9 +57,9 @@ export const Detail = () => {
                 />
             )}
 
-            <div className="row w-100 mt-4 d-flex justify-content-evenly align-items-center">
+            <div className="row w-100 detail-entries-box-size mt-4 d-flex justify-content-between overflow-scroll">
                 {trackingEntries.map(entry => (
-                    <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size">
+                    <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size rounded">
                         <DetailItem
                             habitTrackingEntry={entry}
                             onUpdateHabitTrackingEntryStatus={handleUpdateTrackingEntryStatus}
@@ -67,6 +67,9 @@ export const Detail = () => {
                     </div>
                 ))}
             </div>
+
+            <Footer showBackArrow={true} showLogout={false} backArrowNavigateTo='/habits/list' />
+
         </div>
     );
 };

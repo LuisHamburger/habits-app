@@ -9,3 +9,7 @@ body {
 .c-green-letter {
     color: #014701;
 }
+
+.border-green {
+    border-color: #014701 !important;
+}

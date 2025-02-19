@@ -4,3 +4,7 @@
     min-width: 110px;
     min-height: 100px;
 }
+
+.detail-entries-box-size {
+    max-height: 420px;
+}

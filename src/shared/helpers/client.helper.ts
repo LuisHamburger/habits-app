@@ -8,6 +8,10 @@ export const getClientID = () => {
     return clientID ? clientID : null
 };
 
+export const logOut = () => {
+    localStorage.clear();
+}
+
 export const saveSessionToken = (token: string) => localStorage.setItem(Localstorage.SESSION_TOKEN, encryptToken(token));
 
 export const getSessionToken = () => {
