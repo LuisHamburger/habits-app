@@ -57,7 +57,7 @@ export const Detail = () => {
                 />
             )}
 
-            <div className="row w-100 detail-entries-box-size mt-4 d-flex justify-content-between overflow-scroll">
+            <div className="row w-100 c-detail-entries-box-size mt-4 d-flex justify-content-between overflow-scroll">
                 {trackingEntries.map(entry => (
                     <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size rounded">
                         <DetailItem

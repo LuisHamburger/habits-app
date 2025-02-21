@@ -80,9 +80,9 @@ export const List = () => {
                 <Search onSearchHabit={onSearchHabit} onCreateHabit={onCreateHabit} />
             </div>
 
-            <div className="row mt-4 w-100">
+            <div className="row mt-2 w-100">
                 <div className="col-12">
-                    <ul className="list-group">
+                    <ul className="list-group overflow-scroll c-list-habits-box-size">
                         {filteredHabits.length > 0 ? (
                             filteredHabits.map(habit => (
                                 <ListItem

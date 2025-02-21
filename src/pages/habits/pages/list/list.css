@@ -13,3 +13,7 @@
 .c-fs-40 {
     font-size: 40px;
 }
+
+.c-list-habits-box-size {
+    max-height: 400px;
+}
