@@ -3,6 +3,8 @@ import { HabitTrackingEntryStatus } from "../enums/habit-tracking-entry-status.e
 
 export type Habit = {
     name: string;
+    startDate: Date;
+    finishDate: Date;
     id: string;
     clientId: string;
     status: HabitStatus;

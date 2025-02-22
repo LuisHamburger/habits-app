@@ -22,7 +22,7 @@ export const fetchHabitsByClientId = (clientId: string): Habit[] => {
 export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined => {
     const habits: Habit[] = getLocalStorageData(Localstorage.HABITS, []);
     const habit = habits.find(habit => habit.id === habitId && habit.status === HabitStatus.ACTIVE);
-    
+
     if (!habit) return undefined;
 
     const trackingEntries = fetchHabitTrackingEntriesByHabitId(habitId);
@@ -32,6 +32,8 @@ export const fetchHabitDetailById = (habitId: string): HabitDetail | undefined =
         clientId: habit.clientId,
         name: habit.name,
         status: habit.status,
+        startDate: habit.startDate,
+        finishDate: habit.finishDate,
         habitTrackingEntries: trackingEntries
     };
 };
@@ -41,7 +43,7 @@ export const fetchHabitTrackingEntriesByHabitId = (habitId: string): HabitTracki
     return entries.filter(entry => entry.habitId === habitId);
 };
 
-export const filterTrackingEntriesByMonth = (entries: HabitTrackingEntry[], date: Date): HabitTrackingEntry[] => 
+export const filterTrackingEntriesByMonth = (entries: HabitTrackingEntry[], date: Date): HabitTrackingEntry[] =>
     entries.filter(entry => format(new Date(entry.date), 'yyyy-MM') === format(date, 'yyyy-MM'));
 
 
@@ -58,11 +60,17 @@ export const updateTrackingEntry = (habitId: string, date: Date, status: HabitTr
     setLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES, entries);
 };
 
-export const createHabit = (name: string, clientId: string): void => {
+export const createHabit = (name: string, startDate: string, finishDate: string, clientId: string): void => {
     const habits: Habit[] = getLocalStorageData(Localstorage.HABITS, []);
+    const startDataCOL = new Date(`${startDate}T05:00`);
+
+    const finishDataCOL = new Date(`${finishDate}T05:00`);
+
     const habit: Habit = {
         id: v4(),
         name,
+        startDate: startDataCOL,
+        finishDate: finishDataCOL,
         clientId,
         status: HabitStatus.ACTIVE
     };

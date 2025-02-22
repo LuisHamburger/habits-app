@@ -52,6 +52,8 @@ export const Detail = () => {
                 <DetailHeader
                     habitName={habitDetail.name}
                     habitDate={selectedDate}
+                    habitStartDate={habitDetail.startDate}
+                    habitFinishDate={habitDetail.finishDate}
                     onPreviousDate={() => handleDateChange(false)}
                     onNextDate={() => handleDateChange(true)}
                 />
