@@ -43,7 +43,7 @@ body {
 }
 
 .c-list-habits-box-size {
-    max-height: 400px;
+    max-height: 60vh;
 }
 
 .c-card-size {
@@ -54,7 +54,7 @@ body {
 }
 
 .c-detail-entries-box-size {
-    max-height: 420px;
+    max-height: 60vh;
 }
 
 .c-tracking-entry-completed {

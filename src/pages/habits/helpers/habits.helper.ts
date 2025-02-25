@@ -1,4 +1,4 @@
-import { Habit, HabitTrackingEntry, HabitDetail } from '../../../shared/types/habit.type';
+import { Habit, HabitTrackingEntry, HabitDetail, HabitEntryNote } from '../../../shared/types/habit.type';
 import { format } from 'date-fns';
 import { HabitTrackingEntryStatus } from '../../../shared/enums/habit-tracking-entry-status.enum';
 import { v4 } from 'uuid';
@@ -59,6 +59,34 @@ export const updateTrackingEntry = (habitId: string, date: Date, status: HabitTr
 
     setLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES, entries);
 };
+
+export const updateTrackingEntryNote = (habitId: string, date: Date, note: string): void => {
+    const entries: HabitTrackingEntry[] = getLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES, []);
+    const entry = entries.find(entry => entry.habitId === habitId && new Date(entry.date).getTime() === new Date(date).getTime());
+
+    const notes: HabitEntryNote[] = getLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES_NOTES, []);
+
+    const existedNote = notes.find((value) => value.entryId === entry?.id);
+
+    if (existedNote) {
+        existedNote.note = note;
+    } else {
+        notes.push({
+            entryId: entry!.id,
+            id: v4(),
+            note,
+        })
+    }
+
+    setLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES_NOTES, notes);
+};
+
+
+export const fetchTrackingEntryNote = (entryId: string): HabitEntryNote | undefined => {
+    const notes: HabitEntryNote[] = getLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES_NOTES, []);
+
+    return notes.find((value) => value.entryId === entryId)
+}
 
 export const createHabit = (name: string, startDate: string, finishDate: string, clientId: string): void => {
     const habits: Habit[] = getLocalStorageData(Localstorage.HABITS, []);

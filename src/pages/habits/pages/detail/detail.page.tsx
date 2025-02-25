@@ -1,7 +1,7 @@
 import { DetailHeader } from '../../components/detail-header.component';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
-import { fetchHabitDetailById, updateTrackingEntry } from '../../helpers/habits.helper';
+import { fetchHabitDetailById, updateTrackingEntry, updateTrackingEntryNote } from '../../helpers/habits.helper';
 import { addMonths, subMonths, isSameMonth } from 'date-fns';
 import { HabitTrackingEntry } from '../../../../shared/types/habit.type';
 import { DetailItem } from '../../components/detail-item.component';
@@ -45,6 +45,10 @@ export const Detail = () => {
         setTrackingEntries(getFilteredTrackingEntries(habitDetail!, selectedDate));
     };
 
+    const onUpdateHabitTrackingEntryNote = (date: Date, note: string) => {
+        updateTrackingEntryNote(habitDetail!.id, date, note);
+    };
+
     return (
         <div className="container-fluid min-vh-100 d-flex align-items-center flex-column">
             {habitDetail && (
@@ -64,6 +68,7 @@ export const Detail = () => {
                         <DetailItem
                             habitTrackingEntry={entry}
                             onUpdateHabitTrackingEntryStatus={onUpdateTrackingEntryStatus}
+                            onUpdateHabitTrackingEntryNote={onUpdateHabitTrackingEntryNote}
                         />
                     </div>
                 ))}

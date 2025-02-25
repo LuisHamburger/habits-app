@@ -9,7 +9,9 @@ export const getClientID = () => {
 };
 
 export const logOut = () => {
-    localStorage.clear();
+    localStorage.removeItem(Localstorage.CLIENT_ID);
+    localStorage.removeItem(Localstorage.SESSION_TOKEN);
+
 }
 
 export const saveSessionToken = (token: string) => localStorage.setItem(Localstorage.SESSION_TOKEN, encryptToken(token));

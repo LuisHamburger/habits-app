@@ -9,9 +9,10 @@ import { DetailModal } from "./detail-modal.component";
 export type DetailItemProps = {
     habitTrackingEntry: HabitTrackingEntry;
     onUpdateHabitTrackingEntryStatus: (date: Date, habitTrackingEntryStatus: HabitTrackingEntryStatus) => void;
+    onUpdateHabitTrackingEntryNote: (date: Date, note: string) => void;
 }
 
-export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatus }: DetailItemProps) => {
+export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatus, onUpdateHabitTrackingEntryNote }: DetailItemProps) => {
     const dateFormatted = format(habitTrackingEntry.date, 'dd');
 
     const [showModal, setShowModal] = useState(false);
@@ -45,6 +46,7 @@ export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatu
                         habitTrackingEntry={habitTrackingEntry}
                         onClose={toggleModal}
                         onUpdateHabitTrackingEntryStatus={onUpdateHabitTrackingEntryStatus}
+                        onUpdateHabitTrackingEntryNote={onUpdateHabitTrackingEntryNote}
                     />
                 )}
 

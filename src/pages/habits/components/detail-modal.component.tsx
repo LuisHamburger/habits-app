@@ -3,16 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { HabitTrackingEntryStatus } from "../../../shared/enums/habit-tracking-entry-status.enum";
-import { HabitTrackingEntry } from "../../../shared/types/habit.type";
+import { HabitTrackingEntry } from '../../../shared/types/habit.type';
+import { fetchTrackingEntryNote } from "../helpers/habits.helper";
 
 type DetailModalProps = {
     habitTrackingEntry: HabitTrackingEntry;
     onClose: () => void;
     onUpdateHabitTrackingEntryStatus: (date: Date, habitTrackingEntryStatus: HabitTrackingEntryStatus) => void;
+    onUpdateHabitTrackingEntryNote: (date: Date, note: string) => void;
 };
 
-export const DetailModal = ({ habitTrackingEntry, onClose, onUpdateHabitTrackingEntryStatus }: DetailModalProps) => {
-    const [note, setNote] = useState('');
+export const DetailModal = ({ habitTrackingEntry, onClose, onUpdateHabitTrackingEntryStatus, onUpdateHabitTrackingEntryNote }: DetailModalProps) => {
+   
+    const entryNote = fetchTrackingEntryNote(habitTrackingEntry.id);
+
+    const [note, setNote] = useState(entryNote?.note ?? '');
+
     const [trackingStatus, setTrackingStatus] = useState(habitTrackingEntry.status);
 
     const onNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNote(e.target.value);
@@ -21,6 +27,7 @@ export const DetailModal = ({ habitTrackingEntry, onClose, onUpdateHabitTracking
 
     const onSave = () => {
         onUpdateHabitTrackingEntryStatus(habitTrackingEntry.date, trackingStatus);
+        onUpdateHabitTrackingEntryNote(habitTrackingEntry.date, note)
         onClose();
     }
 
