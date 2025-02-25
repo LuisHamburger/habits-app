@@ -1,8 +1,10 @@
-import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { faQuestion, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HabitTrackingEntry } from '../../../shared/types/habit.type';
 import { format } from "date-fns";
 import { HabitTrackingEntryStatus } from "../../../shared/enums/habit-tracking-entry-status.enum";
+import { useState } from "react";
+import { DetailModal } from "./detail-modal.component";
 
 export type DetailItemProps = {
     habitTrackingEntry: HabitTrackingEntry;
@@ -12,43 +14,41 @@ export type DetailItemProps = {
 export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatus }: DetailItemProps) => {
     const dateFormatted = format(habitTrackingEntry.date, 'dd');
 
-    const renderDetailBox = () => {
+    const [showModal, setShowModal] = useState(false);
+
+    const toggleModal = () => setShowModal(prev => !prev);
+
+    const getStatusIcon = () => {
         switch (habitTrackingEntry.status) {
             case HabitTrackingEntryStatus.COMPLETED:
-                return (
-                    <>
-                        <p className="mt-2">{dateFormatted}</p>
-                        <p className="fs-1 mb-3"><FontAwesomeIcon icon={faCheck} /></p>
-                    </>
-                );
-
+                return <FontAwesomeIcon icon={faThumbsUp} className="fs-1 mb-3 text-success" />;
             case HabitTrackingEntryStatus.INCOMPLETE:
-                return (
-                    <>
-                        <p className="mt-2">{dateFormatted}</p>
-                        <p className="fs-1 mb-3"><FontAwesomeIcon icon={faX} /></p>
-                    </>
-                );
-
+                return <FontAwesomeIcon icon={faThumbsDown} className="fs-1 mb-3 text-danger" />;
             case HabitTrackingEntryStatus.PENDING:
-                return (
-                    <>
-                        <p className="mt-2">{dateFormatted}</p>
-                        <div className="d-flex justify-content-between align-items-center mb-1">
-                            <button className="btn c-btn-outline-green me-2" type="button">
-                                <FontAwesomeIcon icon={faCheck} onClick={() => onUpdateHabitTrackingEntryStatus(habitTrackingEntry.date, HabitTrackingEntryStatus.COMPLETED)} />
-                            </button>
-                            <button className="btn c-btn-outline-green" type="button">
-                                <FontAwesomeIcon icon={faX} onClick={() => onUpdateHabitTrackingEntryStatus(habitTrackingEntry.date, HabitTrackingEntryStatus.INCOMPLETE)}/>
-                            </button>
-                        </div>
-                    </>
-                );
-
+                return <FontAwesomeIcon icon={faQuestion} className="fs-1 mb-3" />;
             default:
                 return null;
         }
     };
 
-    return <>{renderDetailBox()}</>;
+    return (
+        <>
+            <div>
+                <p className="mt-2">{dateFormatted}</p>
+
+                <div className="d-flex justify-content-center" onClick={toggleModal}>
+                    {getStatusIcon()}
+                </div>
+
+                {showModal && (
+                    <DetailModal
+                        habitTrackingEntry={habitTrackingEntry}
+                        onClose={toggleModal}
+                        onUpdateHabitTrackingEntryStatus={onUpdateHabitTrackingEntryStatus}
+                    />
+                )}
+
+            </div>
+        </>
+    );
 };

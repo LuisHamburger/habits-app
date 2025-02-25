@@ -1,4 +1,3 @@
-import './detail.css';
 import { DetailHeader } from '../../components/detail-header.component';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
@@ -36,12 +35,12 @@ export const Detail = () => {
     }, [habitDetail, selectedDate]);
 
 
-    const handleDateChange = (increment: boolean) => {
+    const onDateChange = (increment: boolean) => {
         if (increment && isSameMonth(selectedDate, CURRENT_DATE)) return;
         setSelectedDate(increment ? addMonths(selectedDate, 1) : subMonths(selectedDate, 1));
     };
 
-    const handleUpdateTrackingEntryStatus = (date: Date, status: HabitTrackingEntryStatus) => {
+    const onUpdateTrackingEntryStatus = (date: Date, status: HabitTrackingEntryStatus) => {
         updateTrackingEntry(habitDetail!.id, date, status);
         setTrackingEntries(getFilteredTrackingEntries(habitDetail!, selectedDate));
     };
@@ -54,8 +53,8 @@ export const Detail = () => {
                     habitDate={selectedDate}
                     habitStartDate={habitDetail.startDate}
                     habitFinishDate={habitDetail.finishDate}
-                    onPreviousDate={() => handleDateChange(false)}
-                    onNextDate={() => handleDateChange(true)}
+                    onPreviousDate={() => onDateChange(false)}
+                    onNextDate={() => onDateChange(true)}
                 />
             )}
 
@@ -64,7 +63,7 @@ export const Detail = () => {
                     <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size rounded">
                         <DetailItem
                             habitTrackingEntry={entry}
-                            onUpdateHabitTrackingEntryStatus={handleUpdateTrackingEntryStatus}
+                            onUpdateHabitTrackingEntryStatus={onUpdateTrackingEntryStatus}
                         />
                     </div>
                 ))}

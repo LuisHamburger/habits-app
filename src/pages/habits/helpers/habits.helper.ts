@@ -49,12 +49,12 @@ export const filterTrackingEntriesByMonth = (entries: HabitTrackingEntry[], date
 
 export const updateTrackingEntry = (habitId: string, date: Date, status: HabitTrackingEntryStatus): void => {
     const entries: HabitTrackingEntry[] = getLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES, []);
-    const entryToUpdate = entries.find(entry => entry.habitId === habitId && new Date(entry.date).getTime() === date.getTime());
+    const entryToUpdate = entries.find(entry => entry.habitId === habitId && new Date(entry.date).getTime() === new Date(date).getTime());
 
     if (entryToUpdate) {
         entryToUpdate.status = status;
     } else {
-        entries.push({ date, habitId, status });
+        entries.push({ date, habitId, status, id: v4() });
     }
 
     setLocalStorageData(Localstorage.HABIT_TRACKING_ENTRIES, entries);

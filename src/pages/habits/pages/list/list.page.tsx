@@ -1,4 +1,3 @@
-import './list.css';
 import Swal from 'sweetalert2';
 import { Header } from '../../components/header.component';
 import { Search } from '../../components/search.component';

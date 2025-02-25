@@ -11,6 +11,7 @@ export type Habit = {
 }
 
 export type HabitTrackingEntry = {
+    id: string;
     habitId: string;
     date: Date;
     status: HabitTrackingEntryStatus;
@@ -18,4 +19,10 @@ export type HabitTrackingEntry = {
 
 export type HabitDetail = Habit & {
     habitTrackingEntries: HabitTrackingEntry[];
+}
+
+export type HabitEntryNote = {
+    id: string;
+    entryId: string;
+    note: string;
 }

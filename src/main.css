@@ -13,3 +13,54 @@ body {
 .border-green {
     border-color: #014701 !important;
 }
+
+.c-btn-outline-green {
+    color: #014701;
+    border-color: #014701;
+    background-color: transparent;
+}
+
+.c-btn-outline-green:hover {
+    color: #fff;
+    background-color: #014701;
+    border-color: #014701;
+}
+
+.c-btn-outline-gray {
+    color: #4d4d4d;
+    border-color: #4d4d4d;
+    background-color: transparent;
+}
+
+.c-btn-outline-gray:hover {
+    color: #fff;
+    background-color: #4d4d4d;
+    border-color: #4d4d4d;
+}
+
+.c-fs-40 {
+    font-size: 40px;
+}
+
+.c-list-habits-box-size {
+    max-height: 400px;
+}
+
+.c-card-size {
+    max-width: 110px;
+    max-height: 100px;
+    min-width: 110px;
+    min-height: 100px;
+}
+
+.c-detail-entries-box-size {
+    max-height: 420px;
+}
+
+.c-tracking-entry-completed {
+    background-color: #014701;
+}
+
+.c-tracking-entry-incomplete {
+    background-color: #723333;
+}

@@ -22,7 +22,7 @@ export const Create = () => {
         return null;
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setHabitData((prevState) => ({
             ...prevState,
@@ -54,7 +54,7 @@ export const Create = () => {
                 <div className="my-3 text-center">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input
-                        onChange={handleInputChange}
+                        onChange={onInputChange}
                         type="text"
                         className="form-control"
                         id="name"
@@ -64,7 +64,7 @@ export const Create = () => {
                 <div className="mb-3 text-center">
                     <label htmlFor="startDate" className="form-label">Start Date</label>
                     <input
-                        onChange={handleInputChange}
+                        onChange={onInputChange}
                         type="date"
                         className="form-control"
                         id="startDate"
@@ -74,7 +74,7 @@ export const Create = () => {
                 <div className="mb-3 text-center">
                     <label htmlFor="finishDate" className="form-label">Finish Date</label>
                     <input
-                        onChange={handleInputChange}
+                        onChange={onInputChange}
                         type="date"
                         className="form-control"
                         id="finishDate"
