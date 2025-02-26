@@ -10,11 +10,11 @@ export type ListItemProps = {
 
 export const ListItem = ({ habit, onDeleteHabit, onDetailHabit }: ListItemProps) => {
     return (
-        <li className="list-group-item d-flex justify-content-between align-items-center border border-dark my-1">
+        <li className="flex justify-between items-center border border-gray-800 my-1 p-2 rounded">
             <span>{habit.name}</span>
-            <div>
+            <div className="flex space-x-2">
                 <button
-                    className="btn c-btn-outline-green me-2"
+                    className="bg-transparent border border-gray-800 text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
                     type="button"
                     onClick={() => onDetailHabit(habit.id)}
                     aria-label={`View ${habit.name}`}
@@ -22,7 +22,7 @@ export const ListItem = ({ habit, onDeleteHabit, onDetailHabit }: ListItemProps)
                     <FontAwesomeIcon icon={faEye} />
                 </button>
                 <button
-                    className="btn btn-outline-danger"
+                    className="bg-transparent border border-red-600 text-red-600 hover:bg-red-100 px-4 py-2 rounded-md"
                     type="button"
                     onClick={() => onDeleteHabit(habit.id)}
                     aria-label={`Delete ${habit.name}`}

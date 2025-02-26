@@ -31,31 +31,29 @@ export const DetailHeader = ({
 
   return (
     <>
-      <div className="row mt-4 w-100">
-        <h1 className="text-center c-fs-40">{habitName}</h1>
+      <div className="w-full text-center border-b border-gray-800">
+        <h1 className="text-center text-4xl font-bold">{habitName}</h1>
       </div>
 
-      <div className="row mt-4 w-100 d-flex justify-content-between align-items-center">
+      <div className="mt-10 w-100 grid grid-cols-3 gap-4">
         <button
-          className="col-2 btn c-btn-outline-green"
-          style={{ visibility: isPreviousVisible() ? 'visible' : 'hidden' }}
+          className={`${!isPreviousVisible() ? 'invisible' : ''}`}
           type="button"
           aria-label="Previous Date"
           onClick={onPreviousDate}
         >
-          <FontAwesomeIcon icon={faArrowCircleLeft} />
+          <FontAwesomeIcon className="text-emerald-800 text-3xl" icon={faArrowCircleLeft} />
         </button>
 
-        <h2 className="col-6 text-center m-0">{format(habitDate, 'yyyy-MM')}</h2>
+        <h2 className="text-center text-2xl">{format(habitDate, 'yyyy-MM')}</h2>
 
         <button
-          className="col-2 btn c-btn-outline-green"
-          style={{ visibility: isNextVisible() ? 'visible' : 'hidden' }}
+          className={`${!isNextVisible() ? 'invisible' : ''}`}
           type="button"
           aria-label="Next Date"
           onClick={onNextDate}
         >
-          <FontAwesomeIcon icon={faArrowCircleRight} />
+          <FontAwesomeIcon className="text-emerald-800 text-3xl" icon={faArrowCircleRight} />
         </button>
       </div>
     </>

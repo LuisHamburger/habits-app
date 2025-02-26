@@ -14,16 +14,16 @@ export type DetailItemProps = {
 
 const StatusIcon = ({ status }: { status: HabitTrackingEntryStatus }) => {
     const iconProps = {
-        className: "fs-1 mb-3",
+        className: "text-4xl mb-3",
     };
 
     switch (status) {
         case HabitTrackingEntryStatus.COMPLETED:
-            return <FontAwesomeIcon icon={faThumbsUp} className={`text-success ${iconProps.className}`} />;
+            return <FontAwesomeIcon icon={faThumbsUp} className={`text-green-500 ${iconProps.className}`} />;
         case HabitTrackingEntryStatus.INCOMPLETE:
-            return <FontAwesomeIcon icon={faThumbsDown} className={`text-danger ${iconProps.className}`} />;
+            return <FontAwesomeIcon icon={faThumbsDown} className={`text-red-500 ${iconProps.className}`} />;
         case HabitTrackingEntryStatus.PENDING:
-            return <FontAwesomeIcon icon={faQuestion} className={iconProps.className} />;
+            return <FontAwesomeIcon icon={faQuestion} className={`${iconProps.className}`} />;
         default:
             return null;
     }
@@ -36,10 +36,10 @@ export const DetailItem = ({ habitTrackingEntry, onUpdateHabitTrackingEntryStatu
     const toggleModal = useCallback(() => setShowModal(prev => !prev), []);
 
     return (
-        <div>
+        <div className="text-center">
             <p className="mt-2">{dateFormatted}</p>
 
-            <div className="d-flex justify-content-center" onClick={toggleModal}>
+            <div className="cursor-pointer flex justify-center items-center" onClick={toggleModal}>
                 <StatusIcon status={habitTrackingEntry.status} />
             </div>
 

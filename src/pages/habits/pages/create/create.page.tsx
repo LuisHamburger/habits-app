@@ -44,52 +44,53 @@ export const Create = () => {
         }).then(() => {
             navigate('/habits/list', { replace: true });
         });
-
     };
 
     return (
-        <div className="container-fluid min-vh-100 d-flex align-items-center flex-column">
+        <>
             <Header />
-            <form className="w-100" onSubmit={(e) => e.preventDefault()}>
-                <div className="my-3 text-center">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input
-                        onChange={onInputChange}
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        value={habitData.name}
-                    />
-                </div>
-                <div className="mb-3 text-center">
-                    <label htmlFor="startDate" className="form-label">Start Date</label>
-                    <input
-                        onChange={onInputChange}
-                        type="date"
-                        className="form-control"
-                        id="startDate"
-                        value={habitData.startDate}
-                    />
-                </div>
-                <div className="mb-3 text-center">
-                    <label htmlFor="finishDate" className="form-label">Finish Date</label>
-                    <input
-                        onChange={onInputChange}
-                        type="date"
-                        className="form-control"
-                        id="finishDate"
-                        value={habitData.finishDate}
-                    />
-                </div>
-                <button
-                    onClick={onCreate}
-                    type="button"
-                    className="btn c-btn-outline-green w-100"
-                >
-                    Create
-                </button>
-            </form>
+            <div className="flex flex-col items-center justify-center">
+                <form className="w-full max-w-md p-6" onSubmit={(e) => e.preventDefault()}>
+                    <div className="my-3 text-center">
+                        <label htmlFor="name" className="block text-sm font-semibold">Name</label>
+                        <input
+                            onChange={onInputChange}
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            id="name"
+                            value={habitData.name}
+                        />
+                    </div>
+                    <div className="mb-3 text-center">
+                        <label htmlFor="startDate" className="block text-sm font-semibold">Fecha de Inicio</label>
+                        <input
+                            onChange={onInputChange}
+                            type="date"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            id="startDate"
+                            value={habitData.startDate}
+                        />
+                    </div>
+                    <div className="mb-3 text-center">
+                        <label htmlFor="finishDate" className="block text-sm font-semibold">Fecha de Finalización</label>
+                        <input
+                            onChange={onInputChange}
+                            type="date"
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            id="finishDate"
+                            value={habitData.finishDate}
+                        />
+                    </div>
+                    <button
+                        onClick={onCreate}
+                        type="button"
+                        className="w-full bg-transparent border border-emerald-800 text-emerald-800 py-2 px-4 rounded-md hover:bg-emerald-800"
+                    >
+                        Crear
+                    </button>
+                </form>
+            </div>
             <Footer showBackArrow={true} showLogout={false} backArrowNavigateTo="/habits/list" />
-        </div>
+        </>
     );
 };

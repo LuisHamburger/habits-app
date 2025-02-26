@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import './footer.component.css'
 import { logOut } from '../../../shared/helpers/client.helper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -8,8 +7,7 @@ type FooterProps = {
     showBackArrow: boolean;
     showLogout: boolean;
     backArrowNavigateTo?: string;
-}
-
+};
 
 export const Footer = ({ showBackArrow, showLogout, backArrowNavigateTo }: FooterProps) => {
 
@@ -25,21 +23,25 @@ export const Footer = ({ showBackArrow, showLogout, backArrowNavigateTo }: Foote
     }
 
     return (
-        <footer className="navbar w-100 border border-dark rounded footer-box-size footer-box-position">
-            <div className="w-100 d-flex justify-content-between align-item-center">
-                <div>
-                    {showBackArrow && <div className='btn btn-link' onClick={onBackArrow}>
-                        <FontAwesomeIcon className="fs-3 c-green-letter" icon={faArrowLeft} />
-                    </div>}
+        <footer className="w-full border border-gray-800 p-2 rounded fixed bottom-1">
+            <div className="flex justify-between items-center">
+                <div className="flex space-x-4">
+                    {showBackArrow && (
+                        <div className="cursor-pointer text-emerald-800 hover:text-emerald-900" onClick={onBackArrow}>
+                            <FontAwesomeIcon className="text-2xl" icon={faArrowLeft} />
+                        </div>
+                    )}
 
-                    {showLogout && <div className='btn btn-link' onClick={onLogOut}>
-                        <FontAwesomeIcon className="fs-3 c-green-letter" icon={faRightFromBracket} />
-                    </div>}
+                    {showLogout && (
+                        <div className="cursor-pointer text-emerald-800 hover:text-green-900" onClick={onLogOut}>
+                            <FontAwesomeIcon className="text-2xl" icon={faRightFromBracket} />
+                        </div>
+                    )}
                 </div>
 
-                <div>
-                    <a className="navbar-brand text-center">
-                        Ham<b className='c-green-letter'>Tech</b>
+                <div className="text-center">
+                    <a className="text-xl font-semibold">
+                        Ham<b className="text-emerald-800">Tech</b>
                     </a>
                 </div>
 

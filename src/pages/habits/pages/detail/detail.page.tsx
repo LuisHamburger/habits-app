@@ -12,11 +12,9 @@ import { Footer } from '../../components/footer.component';
 export const Detail = () => {
 
     const { id } = useParams();
-
     const navigate = useNavigate();
 
     const [selectedDate, setSelectedDate] = useState(CURRENT_DATE);
-
     const [trackingEntries, setTrackingEntries] = useState<HabitTrackingEntry[]>([]);
 
     const habitDetail = useMemo(() => {
@@ -34,7 +32,6 @@ export const Detail = () => {
         setTrackingEntries(habitDetail && selectedDate ? getFilteredTrackingEntries(habitDetail!, selectedDate) : []);
     }, [habitDetail, selectedDate]);
 
-
     const onDateChange = (increment: boolean) => {
         if (increment && isSameMonth(selectedDate, CURRENT_DATE)) return;
         setSelectedDate(increment ? addMonths(selectedDate, 1) : subMonths(selectedDate, 1));
@@ -49,8 +46,8 @@ export const Detail = () => {
         updateTrackingEntryNote(habitDetail!.id, date, note);
     };
 
-    return (
-        <div className="container-fluid min-vh-100 d-flex align-items-center flex-column">
+    return (<>
+        <div className="w-full mt-4 flex flex-col items-center justify-center">
             {habitDetail && (
                 <DetailHeader
                     habitName={habitDetail.name}
@@ -62,20 +59,21 @@ export const Detail = () => {
                 />
             )}
 
-            <div className="row w-100 c-detail-entries-box-size mt-4 d-flex justify-content-between overflow-scroll">
+            <div className="w-full mt-4 flex flex-wrap justify-center items-center overflow-x-scroll p-2 max-h-[calc(100vh-200px)]">
                 {trackingEntries.map(entry => (
-                    <div key={new Date(entry.date).getTime()} className="col border border-dark text-center my-1 c-card-size rounded">
-                        <DetailItem
-                            habitTrackingEntry={entry}
-                            onUpdateHabitTrackingEntryStatus={onUpdateTrackingEntryStatus}
-                            onUpdateHabitTrackingEntryNote={onUpdateHabitTrackingEntryNote}
-                        />
+                    <div key={new Date(entry.date).getTime()}>
+                        <div className="border border-gray-300 w-20 m-1 text-center rounded shadow">
+                            <DetailItem
+                                habitTrackingEntry={entry}
+                                onUpdateHabitTrackingEntryStatus={onUpdateTrackingEntryStatus}
+                                onUpdateHabitTrackingEntryNote={onUpdateHabitTrackingEntryNote}
+                            />
+                        </div>
                     </div>
                 ))}
             </div>
-
-            <Footer showBackArrow={true} showLogout={false} backArrowNavigateTo='/habits/list' />
-
         </div>
+        <Footer showBackArrow={true} showLogout={false} backArrowNavigateTo='/habits/list' />
+    </>
     );
 };

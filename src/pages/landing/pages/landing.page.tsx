@@ -3,15 +3,15 @@ import { Login } from '../components/login.component';
 
 export const Landing = () => {
   return (
-    <div className='container-fluid min-vh-100 d-flex justify-content-center align-items-center flex-column'>
-      <div className="row">
-        <h1 className='col-4 text-center animate__animated animate__backInLeft'>¡Make</h1>
-        <h1 className='col-3 c-green-letter text-center animate__animated animate__flip'>it</h1>
-        <h1 className='col-5 text-center animate__animated animate__backInRight'>happen!</h1>
+    <div className='min-h-screen flex justify-center items-center flex-col'>
+      <div className="flex justify-center items-center w-full text-3xl font-bold">
+        <h1 className='text-center animate__animated animate__backInLeft me-2'>Haz</h1>
+        <h1 className='text-center text-emerald-800 animate__animated animate__flip'>que</h1>
+        <h1 className='text-center animate__animated animate__backInRight ms-2'>suceda!</h1>
       </div>
 
-      <div className="row mt-3">
-        <div className="input-group animate__animated animate__backInUp">
+      <div className="flex w-full mt-3 justify-center">
+        <div className="animate__animated animate__backInUp">
           <Login />
         </div>
       </div>

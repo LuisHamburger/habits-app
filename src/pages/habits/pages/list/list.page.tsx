@@ -71,17 +71,16 @@ export const List = () => {
         navigate(`/habits/${habitId}`, { replace: true });
     };
 
-    return (
-        <div className="container-fluid min-vh-100 d-flex align-items-center flex-column">
-            <Header />
-
-            <div className="row my-4 w-100">
+    return (<>
+        <Header />
+        <div className="w-full min-h-screen flex flex-col items-center">
+            <div className="w-full my-4 flex justify-between">
                 <Search onSearchHabit={onSearchHabit} onCreateHabit={onCreateHabit} />
             </div>
 
-            <div className="row mt-2 w-100">
-                <div className="col-12">
-                    <ul className="list-group overflow-scroll c-list-habits-box-size">
+            <div className="w-full mt-2">
+                <div className="w-full">
+                    <ul className="list-none overflow-y-auto max-h-[calc(100vh-200px)]">
                         {filteredHabits.length > 0 ? (
                             filteredHabits.map(habit => (
                                 <ListItem
@@ -92,13 +91,13 @@ export const List = () => {
                                 />
                             ))
                         ) : (
-                            <li className="list-group-item text-center">No habits found</li>
+                            <li className="text-center py-4">No habits found</li>
                         )}
                     </ul>
                 </div>
             </div>
-
-            <Footer showBackArrow={false} showLogout={true}/>
         </div>
+        <Footer showBackArrow={false} showLogout={true} backArrowNavigateTo='/habits/list' />
+    </>
     );
 };
