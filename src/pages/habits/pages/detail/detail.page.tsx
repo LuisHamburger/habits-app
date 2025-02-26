@@ -59,7 +59,7 @@ export const Detail = () => {
                 />
             )}
 
-            <div className="w-full mt-4 flex flex-wrap justify-center items-center overflow-x-scroll p-2 max-h-[calc(100vh-200px)]">
+            <div className="w-full mt-4 flex flex-wrap justify-center items-center overflow-x-scroll py-2 px-3 max-h-[calc(100vh-200px)]">
                 {trackingEntries.map(entry => (
                     <div key={new Date(entry.date).getTime()}>
                         <div className="border border-gray-300 w-20 m-1 text-center rounded shadow">

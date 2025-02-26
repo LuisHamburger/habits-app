@@ -70,7 +70,7 @@ export const List = () => {
 
     return (<>
         <Header />
-        <div className="w-full min-h-screen flex flex-col items-center">
+        <div className="w-full min-h-screen flex flex-col items-center px-3">
             <div className="w-full my-4 flex justify-between">
                 <Search onSearchHabit={onSearchHabit} onCreateHabit={onCreateHabit} />
             </div>

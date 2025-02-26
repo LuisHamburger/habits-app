@@ -23,7 +23,7 @@ export const Footer = ({ showBackArrow, showLogout, backArrowNavigateTo }: Foote
     }
 
     return (
-        <footer className="w-full border border-gray-800 p-2 rounded fixed bottom-1">
+        <footer className="w-full border border-gray-800 p-2 rounded fixed bottom-0">
             <div className="flex justify-between items-center">
                 <div className="flex space-x-4">
                     {showBackArrow && (
@@ -44,7 +44,6 @@ export const Footer = ({ showBackArrow, showLogout, backArrowNavigateTo }: Foote
                         Ham<b className="text-emerald-800">Tech</b>
                     </a>
                 </div>
-
             </div>
         </footer>
     );
