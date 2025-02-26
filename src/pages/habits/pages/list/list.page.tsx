@@ -16,7 +16,7 @@ export const List = () => {
     useEffect(() => {
         if (!clientID) {
             navigate('landing', { replace: true });
-            Swal.fire('Be logged', 'There is an error, please login again.', 'warning');
+            Swal.fire('Inicia sesión', 'Hubo un error, por favor inicia sesión nuevamente.', 'warning');
         }
     }, [clientID, navigate]);
 
@@ -38,9 +38,6 @@ export const List = () => {
         } else {
             const results = habits.filter(habit => habit.name.toLowerCase().includes(searchQuery));
             setFilteredHabits(results);
-            if (results.length === 0) {
-                Swal.fire(`No habits found for: ${habitName}`, '', 'error');
-            }
         }
     };
 
@@ -50,19 +47,19 @@ export const List = () => {
 
     const onDeleteHabit = (habitId: string) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
+            title: '¿Seguro?',
+            text: '¡Es irreversible!',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteHabit(habitId, clientID!);
                 const updatedHabits = fetchHabitsByClientId(clientID!);
                 setHabits(updatedHabits);
                 setFilteredHabits(updatedHabits);
-                Swal.fire('Deleted!', 'Your habit has been deleted.', 'success');
+                Swal.fire('¡Eliminado!', 'El habito ha sido eliminado.', 'success');
             }
         });
     };
@@ -91,7 +88,7 @@ export const List = () => {
                                 />
                             ))
                         ) : (
-                            <li className="text-center py-4">No habits found</li>
+                            <li className="text-center py-4">¡No se han encontrado habitos!</li>
                         )}
                     </ul>
                 </div>

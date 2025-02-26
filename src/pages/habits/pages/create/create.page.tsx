@@ -18,7 +18,7 @@ export const Create = () => {
 
     if (!clientID) {
         navigate('landing', { replace: true });
-        Swal.fire('Be logged', 'There is an error, please login again.', 'warning');
+        Swal.fire('Inicia sesión', 'Hubo un error, por favor inicia sesión nuevamente.', 'warning');
         return null;
     }
 
@@ -32,15 +32,15 @@ export const Create = () => {
 
     const onCreate = () => {
         if (!habitData.name || !habitData.startDate || !habitData.finishDate) {
-            return Swal.fire('Invalid input', 'Please fill in all fields before creating the habit.', 'error');
+            return Swal.fire('Datos incorrectos', 'Por favor llena toda la información.', 'error');
         }
 
         createHabit(habitData.name, habitData.startDate, habitData.finishDate, clientID!);
 
         Swal.fire({
             icon: 'success',
-            title: 'Habit Created!',
-            text: `Your habit ${habitData.name} has been created successfully.`,
+            title: '¡Habito Creado!',
+            text: `Tu habito ${habitData.name} ha sido creado correctamente.`,
         }).then(() => {
             navigate('/habits/list', { replace: true });
         });
@@ -52,7 +52,7 @@ export const Create = () => {
             <div className="flex flex-col items-center justify-center">
                 <form className="w-full max-w-md p-6" onSubmit={(e) => e.preventDefault()}>
                     <div className="my-3 text-center">
-                        <label htmlFor="name" className="block text-sm font-semibold">Name</label>
+                        <label htmlFor="name" className="block text-sm font-semibold">Nombre</label>
                         <input
                             onChange={onInputChange}
                             type="text"

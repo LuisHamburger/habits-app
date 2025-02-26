@@ -19,9 +19,9 @@ const StatusIcon = ({ status }: { status: HabitTrackingEntryStatus }) => {
 
     switch (status) {
         case HabitTrackingEntryStatus.COMPLETED:
-            return <FontAwesomeIcon icon={faThumbsUp} className={`text-green-500 ${iconProps.className}`} />;
+            return <FontAwesomeIcon icon={faThumbsUp} className={`text-emerald-800 ${iconProps.className}`} />;
         case HabitTrackingEntryStatus.INCOMPLETE:
-            return <FontAwesomeIcon icon={faThumbsDown} className={`text-red-500 ${iconProps.className}`} />;
+            return <FontAwesomeIcon icon={faThumbsDown} className={`text-red-800 ${iconProps.className}`} />;
         case HabitTrackingEntryStatus.PENDING:
             return <FontAwesomeIcon icon={faQuestion} className={`${iconProps.className}`} />;
         default:

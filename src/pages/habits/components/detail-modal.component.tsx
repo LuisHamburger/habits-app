@@ -16,11 +16,11 @@ type DetailModalProps = {
 
 const StatusButton = ({ trackingStatus, status, icon, onClick }: { trackingStatus: HabitTrackingEntryStatus, status: HabitTrackingEntryStatus, icon: IconProp, onClick: () => void }) => {
     const isActive = trackingStatus === status;
-    const btnClass = isActive ? `btn-${status === HabitTrackingEntryStatus.COMPLETED ? 'success' : 'danger'}` : 'btn-outline-dark';
+    const btnClass = isActive ? `${status === HabitTrackingEntryStatus.COMPLETED ? 'bg-emerald-800' : 'bg-red-800'} text-white` : 'border-2 border-gray-500 text-gray-500';
 
     return (
         <button
-            className={`btn ${btnClass} mx-2 fs-2`}
+            className={`btn ${btnClass} mx-2 p-4 rounded-full text-xl`}
             onClick={onClick}
         >
             <FontAwesomeIcon icon={icon} />
@@ -59,51 +59,49 @@ export const DetailModal = ({ habitTrackingEntry, onClose, onUpdateHabitTracking
     };
 
     return (
-        <div className="modal fade show d-block" tabIndex={-1}>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-                <div className="modal-content">
-                    <div className="modal-header d-flex justify-content-center">
-                        <h5 className="modal-title">{format(habitTrackingEntry.date, 'yyyy-MM-dd')}</h5>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-transparent bg-opacity-90">
+            <div className="w-full max-w-sm bg-white rounded-lg shadow-lg">
+                <div className="modal-header text-center p-4 border-b">
+                    <h5 className="text-lg font-bold">{format(habitTrackingEntry.date, 'yyyy-MM-dd')}</h5>
+                </div>
+                <div className="modal-body p-4">
+                    <div className="form-group flex flex-col items-center">
+                        <label htmlFor="habitNote" className="mb-2">¿Alguna anotación?</label>
+                        <textarea
+                            id="habitNote"
+                            className="w-full p-2 border rounded mb-4"
+                            rows={4}
+                            placeholder="Escribe tu nota aquí..."
+                            value={note}
+                            onChange={onNoteChange}
+                        />
                     </div>
-                    <div className="modal-body">
-                        <div className="form-group d-flex justify-content-center align-items-center flex-column">
-                            <label htmlFor="habitNote">¿Alguna anotación?</label>
-                            <textarea
-                                id="habitNote"
-                                className="form-control"
-                                rows={4}
-                                placeholder="Escribe tu nota aquí..."
-                                value={note}
-                                onChange={onNoteChange}
+
+                    <div className="flex flex-col items-center mt-4">
+                        <label className="mb-2">{renderStatusMessage(trackingStatus)}</label>
+                        <div className="flex justify-center mt-2">
+                            <StatusButton
+                                trackingStatus={trackingStatus}
+                                status={HabitTrackingEntryStatus.COMPLETED}
+                                icon={faThumbsUp}
+                                onClick={() => onTrackingStatusChange(HabitTrackingEntryStatus.COMPLETED)}
+                            />
+                            <StatusButton
+                                trackingStatus={trackingStatus}
+                                status={HabitTrackingEntryStatus.INCOMPLETE}
+                                icon={faThumbsDown}
+                                onClick={() => onTrackingStatusChange(HabitTrackingEntryStatus.INCOMPLETE)}
                             />
                         </div>
-
-                        <div className="d-flex justify-content-center align-items-center flex-column mt-4">
-                            <label>{renderStatusMessage(trackingStatus)}</label>
-                            <div className="mt-2">
-                                <StatusButton
-                                    trackingStatus={trackingStatus}
-                                    status={HabitTrackingEntryStatus.COMPLETED}
-                                    icon={faThumbsUp}
-                                    onClick={() => onTrackingStatusChange(HabitTrackingEntryStatus.COMPLETED)}
-                                />
-                                <StatusButton
-                                    trackingStatus={trackingStatus}
-                                    status={HabitTrackingEntryStatus.INCOMPLETE}
-                                    icon={faThumbsDown}
-                                    onClick={() => onTrackingStatusChange(HabitTrackingEntryStatus.INCOMPLETE)}
-                                />
-                            </div>
-                        </div>
                     </div>
-                    <div className="modal-footer d-flex justify-content-center">
-                        <button type="button" className="btn c-btn-outline-gray" onClick={onClose}>
-                            Cerrar
-                        </button>
-                        <button type="button" className="btn c-btn-outline-green" onClick={onSave}>
-                            Guardar cambios
-                        </button>
-                    </div>
+                </div>
+                <div className="modal-footer flex justify-between p-4 border-t">
+                    <button type="button" className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg" onClick={onClose}>
+                        Cerrar
+                    </button>
+                    <button type="button" className="bg-green-500 text-white px-6 py-2 rounded-lg" onClick={onSave}>
+                        Guardar cambios
+                    </button>
                 </div>
             </div>
         </div>
